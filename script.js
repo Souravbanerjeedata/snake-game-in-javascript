@@ -131,4 +131,32 @@ window.addEventListener("load", function () {
       if (!gameStarted) startGame();
     }
   });
+
+  function startGame() {
+    gameStarted = true;
+    window.requestAnimationFrame(main);
+  }
+
+  let startTimestamp;
+  let lastTimestamp;
+  let stepsTaken = -1;
+
+  function main(timestamp) {
+    if (startTimestamp === undefined) startTimestamp = timestamp;
+
+    const totalElapsedTime = timestamp - startTimestamp;
+    const stepsShouldHaveTaken = Math.floor(totalElapsedTime / speed);
+    const percentageOfStep = (totalElapsedTime % speed) / speed;
+
+    if (stepsTaken !== stepsShouldHaveTaken) {
+      // time to take a step
+      stepAndTransition(percentageOfStep);
+      stepsTaken++;
+    } else {
+      transition(percentageOfStep);
+    }
+
+    lastTimestamp = timestamp;
+    window.requestAnimationFrame(main);
+  }
 });
