@@ -73,4 +73,24 @@ window.addEventListener("load", function () {
   }
 
   resetGame(); // call it once at the start
+
+  function getDirection(first, second) {
+    if (first - 1 === second) return "right";
+    if (first + 1 === second) return "left";
+    if (first + width === second) return "up";
+    if (first - width === second) return "down";
+    throw Error("the two tiles are noot connected");
+  }
+
+  function headDirection() {
+    const head = snakePositions[snakePositions.length - 1];
+    const neck = snakePositions[snakePositions.length - 2];
+    return getDirection(head, neck);
+  }
+
+  function tailDirection() {
+    const tail1 = snakePositions[0];
+    const tail2 = snakePositions[1];
+    return getDirection(tail1, tail2);
+  }
 });
