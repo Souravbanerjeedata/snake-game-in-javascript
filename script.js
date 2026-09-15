@@ -1,4 +1,5 @@
 window.addEventListener("load", function () {
+  window.focus();
   // Game data
   let snakePositions;
   let applePosition;
@@ -93,4 +94,41 @@ window.addEventListener("load", function () {
     const tail2 = snakePositions[1];
     return getDirection(tail1, tail2);
   }
+
+  window.addEventListener("keydown", function (event) {
+    if (
+      !["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp", " "].includes(
+        event.key,
+      )
+    )
+      return;
+
+    event.preventDefault();
+    // Space
+    if (event.key === " ") {
+      resetGame();
+      startGame();
+      return;
+    }
+    // Left
+    if (event.key === "ArrowLeft" && headDirection() !== "right") {
+      inputs.push("left");
+      if (!gameStarted) startGame();
+    }
+    // Right
+    if (event.key === "ArrowRight" && headDirection() !== "left") {
+      inputs.push("right");
+      if (!gameStarted) startGame();
+    }
+    // Up
+    if (event.key === "ArrowUp" && headDirection() !== "down") {
+      inputs.push("up");
+      if (!gameStarted) startGame();
+    }
+    // Down
+    if (event.key === "ArrowDown" && headDirection() !== "up") {
+      inputs.push("down");
+      if (!gameStarted) startGame();
+    }
+  });
 });
