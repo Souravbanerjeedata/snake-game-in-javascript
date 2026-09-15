@@ -25,7 +25,7 @@ window.addEventListener("load", function (event) {
   let fadeSpeed = 5000; // how fast the board fades
   let fadeExponential = 1.024;
   const contrastIncrease = 0.5;
-  const color = "black";
+  const color = "#00ff9d"; // neon green for snake
 
   // =====================================================
   // STEP 2 – Build the 15×15 Grid
@@ -77,18 +77,30 @@ window.addEventListener("load", function (event) {
     scoreElement.innerText = hardMode ? `H ${score}` : score;
 
     // Clear all tiles
-    for (const tile of tiles) setTile(tile);
+    for (const tile of tiles) {
+      setTile(tile);
+      tile.className = "content";
+    }
 
     // Draw apple
-    setTile(tiles[applePosition], {
-      "background-color": color,
+    const appleTile = tiles[applePosition];
+    setTile(appleTile, {
+      "background-color": "#ff2a6d",
       "border-radius": "50%",
     });
+    appleTile.classList.add("apple");
 
     // Draw snake body
-    for (const i of snakePositions.slice(1)) {
+    for (let idx = 0; idx < snakePositions.length; idx++) {
+      const i = snakePositions[idx];
       const snakePart = tiles[i];
       snakePart.style.backgroundColor = color;
+      snakePart.classList.add("snake");
+
+      // Head gets special class
+      if (idx === snakePositions.length - 1) {
+        snakePart.classList.add("snake-head");
+      }
 
       // Prepare head and tail for transitions
       if (i == snakePositions[snakePositions.length - 1])
@@ -130,7 +142,10 @@ window.addEventListener("load", function (event) {
       hardMode = true;
       fadeSpeed = 4000;
       fadeExponential = 1.025;
-      noteElement.innerHTML = `Hard mode. Press space to start!`;
+      noteElement.innerHTML = `
+        <div class="footer-main">HARD MODE activated</div>
+        <div class="footer-sub">Press <kbd>SPACE</kbd> to start • Press <kbd>E</kbd> for easy</div>
+      `;
       noteElement.style.opacity = 1;
       resetGame();
       return;
@@ -141,7 +156,10 @@ window.addEventListener("load", function (event) {
       hardMode = false;
       fadeSpeed = 5000;
       fadeExponential = 1.024;
-      noteElement.innerHTML = `Easy mode. Press space to start!`;
+      noteElement.innerHTML = `
+        <div class="footer-main">EASY MODE activated</div>
+        <div class="footer-sub">Press <kbd>SPACE</kbd> to start • Press <kbd>H</kbd> for hard</div>
+      `;
       noteElement.style.opacity = 1;
       resetGame();
       return;
@@ -192,6 +210,7 @@ window.addEventListener("load", function (event) {
   function startGame() {
     gameStarted = true;
     noteElement.style.opacity = 0;
+    noteElement.innerHTML = "";
     window.requestAnimationFrame(main);
   }
 
@@ -240,13 +259,17 @@ window.addEventListener("load", function (event) {
       window.requestAnimationFrame(main);
     } catch (error) {
       // Game over message
-      const pressSpaceToStart = "Press space to reset the game.";
       const changeMode = hardMode
-        ? "Back to easy mode? Press the letter E."
-        : "Ready for hard mode? Press the letter H.";
-      const followMe =
-        'Follow me <a href="https://x.com/souravdotcode" target="_top">@souravdotcode</a>';
-      noteElement.innerHTML = `${error.message}. ${pressSpaceToStart} <div>${changeMode}</div> ${followMe}`;
+        ? `Press <kbd>E</kbd> for Easy mode`
+        : `Press <kbd>H</kbd> for Hard mode`;
+      noteElement.innerHTML = `
+        <div class="footer-main" style="color:#ff2a6d;text-shadow:0 0 12px #ff2a6d88;">
+          ${error.message}
+        </div>
+        <div class="footer-sub">
+          Press <kbd>SPACE</kbd> to restart • ${changeMode}
+        </div>
+      `;
       noteElement.style.opacity = 1;
       containerElement.style.opacity = 1;
     }
@@ -264,6 +287,7 @@ window.addEventListener("load", function (event) {
     // Clear old tail (unless we just grew)
     const previousTail = tiles[snakePositions[0]];
     setTile(previousTail);
+    previousTail.className = "content"; // remove snake classes
 
     if (newHeadPosition != applePosition) {
       snakePositions.shift(); // remove old tail
@@ -272,6 +296,8 @@ window.addEventListener("load", function (event) {
       const tail = tiles[snakePositions[0]];
       const tailDi = tailDirection();
       const tailValue = `${100 - percentageOfStep * 100}%`;
+
+      tail.classList.add("snake");
 
       if (tailDi == "right")
         setTile(tail, { left: 0, width: tailValue, "background-color": color });
@@ -291,14 +317,18 @@ window.addEventListener("load", function (event) {
         });
     }
 
-    // Make previous head full size
+    // Make previous head full size (now body)
     const previousHead = tiles[snakePositions[snakePositions.length - 2]];
     setTile(previousHead, { "background-color": color });
+    previousHead.classList.remove("snake-head");
+    previousHead.classList.add("snake");
 
     // Start sliding the new head in
     const head = tiles[newHeadPosition];
     const headDi = headDirection();
     const headValue = `${percentageOfStep * 100}%`;
+
+    head.classList.add("snake", "snake-head");
 
     if (headDi == "right")
       setTile(head, {
@@ -422,10 +452,15 @@ window.addEventListener("load", function (event) {
       newPosition = Math.floor(Math.random() * width * height);
     } while (snakePositions.includes(newPosition));
 
-    setTile(tiles[newPosition], {
-      "background-color": color,
+    // Clear old apple class if any
+    tiles.forEach((t) => t.classList.remove("apple"));
+
+    const appleTile = tiles[newPosition];
+    setTile(appleTile, {
+      "background-color": "#ff2a6d",
       "border-radius": "50%",
     });
+    appleTile.classList.add("apple");
 
     applePosition = newPosition;
   }
