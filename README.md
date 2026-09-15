@@ -1,8 +1,18 @@
 # Neon Snake
 
+<div align="center">
+    <img src="preview.png" alt="Project Banner" width='1918' height='939' >
+</div>
+
 A modern, visually intense Snake game built with pure HTML, CSS, and vanilla JavaScript.
 
 **Fully playable on mobile** with swipe gestures and mode selection modals.
+
+---
+
+## Play Online
+
+[Click here](https://souravbanerjeedata.github.io/snake-game-in-javascript/)
 
 ---
 
@@ -24,40 +34,18 @@ A modern, visually intense Snake game built with pure HTML, CSS, and vanilla Jav
 ## How to Play
 
 ### Mobile
-1. Choose **EASY** or **HARD** in the opening modal  
-2. **Swipe** in any direction to start and control the snake  
-3. When the game ends, tap **PLAY AGAIN** to return to mode selection  
+
+1. Choose **EASY** or **HARD** in the opening modal
+2. **Swipe** in any direction to start and control the snake
+3. When the game ends, tap **PLAY AGAIN** to return to mode selection
 
 ### Desktop
-| Key | Action |
-|-----|--------|
-| Arrow keys | Move / Start |
-| Space | Restart |
-| H / E | Hard / Easy mode |
 
----
-
-## Getting Started
-
-```bash
-git clone https://github.com/Souravbanerjeedata/snake-game-in-javascript.git
-```
-
-Open `index.html` in any modern browser (phone or desktop).
-
-No build step required.
-
----
-
-## Project Structure
-
-```
-snake-game-in-javascript/
-├── index.html
-├── style.css
-├── script.js
-└── README.md
-```
+| Key        | Action           |
+| ---------- | ---------------- |
+| Arrow keys | Move / Start     |
+| Space      | Restart          |
+| H / E      | Hard / Easy mode |
 
 ---
 
