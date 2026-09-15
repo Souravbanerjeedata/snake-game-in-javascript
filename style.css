@@ -1,7 +1,3 @@
-/* =========================================
-   NEON SNAKE – Extreme Visual Overhaul
-   ========================================= */
-
 :root {
   --size: 18px;
   --snake: #00ff9d;
@@ -52,8 +48,12 @@ body {
 }
 
 @keyframes gridMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 40px 40px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
 }
 
 /* Floating glow orbs */
@@ -85,13 +85,23 @@ body {
 }
 
 @keyframes float1 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(60px, 40px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(60px, 40px);
+  }
 }
 
 @keyframes float2 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-50px, -30px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-50px, -30px);
+  }
 }
 
 /* Main container */
@@ -187,8 +197,12 @@ header {
   border-radius: 16px;
   padding: 2px;
   background: linear-gradient(135deg, #00ff9d, #00d4ff, #ff2a6d);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -253,7 +267,11 @@ header {
 
 /* Apple – pulsing glow */
 .content.apple {
-  background: radial-gradient(circle at 30% 30%, #ff6b9d, var(--apple)) !important;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #ff6b9d,
+    var(--apple)
+  ) !important;
   border-radius: 50% !important;
   box-shadow:
     0 0 12px var(--apple-glow),
@@ -263,7 +281,8 @@ header {
 }
 
 @keyframes applePulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.85);
     box-shadow:
       0 0 10px var(--apple-glow),

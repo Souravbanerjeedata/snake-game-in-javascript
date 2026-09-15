@@ -1,9 +1,6 @@
 window.addEventListener("load", function (event) {
   window.focus(); // Capture keys right away
 
-  // =====================================================
-  // STEP 1 – Configuration & Game State Variables
-  // =====================================================
   let snakePositions; // Array of snake tile indexes (head is last)
   let applePosition; // Current apple tile index
 
@@ -27,9 +24,6 @@ window.addEventListener("load", function (event) {
   const contrastIncrease = 0.5;
   const color = "#00ff9d"; // neon green for snake
 
-  // =====================================================
-  // STEP 2 – Build the 15×15 Grid
-  // =====================================================
   const grid = document.querySelector(".grid");
   for (let i = 0; i < width * height; i++) {
     const content = document.createElement("div");
@@ -51,14 +45,8 @@ window.addEventListener("load", function (event) {
   const contrastElement = document.querySelector(".contrast");
   const scoreElement = document.querySelector(".score");
 
-  // =====================================================
-  // STEP 3 – Initialize the game (place snake + apple)
-  // =====================================================
   resetGame();
 
-  // =====================================================
-  // STEP 4 – resetGame() function
-  // =====================================================
   function resetGame() {
     // Starting positions
     snakePositions = [168, 169, 170, 171];
@@ -109,9 +97,6 @@ window.addEventListener("load", function (event) {
     }
   }
 
-  // =====================================================
-  // STEP 5 – Keyboard Controls
-  // =====================================================
   window.addEventListener("keydown", function (event) {
     if (
       ![
@@ -204,9 +189,6 @@ window.addEventListener("load", function (event) {
     }
   });
 
-  // =====================================================
-  // STEP 6 – Start the game
-  // =====================================================
   function startGame() {
     gameStarted = true;
     noteElement.style.opacity = 0;
@@ -214,9 +196,6 @@ window.addEventListener("load", function (event) {
     window.requestAnimationFrame(main);
   }
 
-  // =====================================================
-  // STEP 7 – Main Animation Loop
-  // =====================================================
   function main(timestamp) {
     try {
       if (startTimestamp === undefined) startTimestamp = timestamp;
@@ -277,9 +256,6 @@ window.addEventListener("load", function (event) {
     lastTimestamp = timestamp;
   }
 
-  // =====================================================
-  // STEP 8 – Move the snake one step + prepare animation
-  // =====================================================
   function stepAndTransition(percentageOfStep) {
     const newHeadPosition = getNextPosition();
     snakePositions.push(newHeadPosition);
@@ -360,9 +336,6 @@ window.addEventListener("load", function (event) {
       });
   }
 
-  // =====================================================
-  // STEP 9 – Smooth animation between steps
-  // =====================================================
   function transition(percentageOfStep) {
     // Animate head growing
     const head = tiles[snakePositions[snakePositions.length - 1]];
@@ -379,9 +352,6 @@ window.addEventListener("load", function (event) {
     if (tailDi == "down" || tailDi == "up") tail.style.height = tailValue;
   }
 
-  // =====================================================
-  // STEP 10 – Calculate next head position + collision
-  // =====================================================
   function getNextPosition() {
     const headPosition = snakePositions[snakePositions.length - 1];
     const snakeDirection = inputs.shift() || headDirection();
@@ -420,9 +390,6 @@ window.addEventListener("load", function (event) {
     }
   }
 
-  // =====================================================
-  // STEP 11 – Direction helpers
-  // =====================================================
   function headDirection() {
     const head = snakePositions[snakePositions.length - 1];
     const neck = snakePositions[snakePositions.length - 2];
@@ -443,9 +410,6 @@ window.addEventListener("load", function (event) {
     throw Error("the two tile are not connected");
   }
 
-  // =====================================================
-  // STEP 12 – Place a new apple
-  // =====================================================
   function addNewApple() {
     let newPosition;
     do {
@@ -465,9 +429,6 @@ window.addEventListener("load", function (event) {
     applePosition = newPosition;
   }
 
-  // =====================================================
-  // STEP 13 – Helper to reset / set CSS on a tile
-  // =====================================================
   function setTile(element, overrides = {}) {
     const defaults = {
       width: "100%",
