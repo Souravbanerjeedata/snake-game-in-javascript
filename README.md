@@ -1,5 +1,9 @@
 # Neon Snake
 
+<div align="center">
+    <img src="preview.png" alt="Project Banner" width='1918' height='948' >
+</div>
+
 A modern, visually intense Snake game built with pure HTML, CSS, and vanilla JavaScript.
 
 ![Neon Snake](https://img.shields.io/badge/JavaScript-Vanilla-yellow)
@@ -11,7 +15,7 @@ A modern, visually intense Snake game built with pure HTML, CSS, and vanilla Jav
 
 ## Live Demo
 
-Open `index.html` in your browser or visit the deployed version (if available).
+[Click here](https://souravbanerjeedata.github.io/snake-game-in-javascript/)
 
 ---
 
@@ -28,49 +32,16 @@ Open `index.html` in your browser or visit the deployed version (if available).
 
 ## How to Play
 
-| Key | Action |
-|-----|--------|
+| Key             | Action                            |
+| --------------- | --------------------------------- |
 | `←` `↑` `→` `↓` | Change direction / Start the game |
-| `Space` | Restart the game |
-| `H` | Switch to **Hard** mode |
-| `E` | Switch to **Easy** mode |
+| `Space`         | Restart the game                  |
+| `H`             | Switch to **Hard** mode           |
+| `E`             | Switch to **Easy** mode           |
 
 **Goal:** Eat as many apples as possible without hitting the walls or yourself.
 
 The board gradually loses contrast (becomes transparent). Eating an apple restores some visibility. In Hard mode the fade is much more aggressive.
-
----
-
-## Getting Started
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Souravbanerjeedata/snake-game-in-javascript.git
-   ```
-
-2. Open `index.html` in any modern browser.
-
-No build tools or dependencies required.
-
-Alternatively, you can use a local server:
-
-```bash
-npx serve .
-# or
-python -m http.server
-```
-
----
-
-## Project Structure
-
-```
-snake-game-in-javascript/
-├── index.html      # Main HTML structure
-├── style.css       # Neon theme & all styles
-├── script.js       # Complete game logic
-└── README.md       # This file
-```
 
 ---
 
@@ -96,8 +67,7 @@ snake-game-in-javascript/
 
 ## Author
 
-**Sourav Banerjee**  
-GitHub: [Souravbanerjeedata](https://github.com/Souravbanerjeedata)
+**Sourav Banerjee**
 
 ---
 
