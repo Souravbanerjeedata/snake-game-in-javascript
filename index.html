@@ -35,27 +35,35 @@
         <div class="grid"></div>
       </div>
 
-      <!-- Mobile Controls -->
-      <div class="mobile-controls">
-        <div class="dpad">
-          <button class="ctrl-btn up" data-dir="up" aria-label="Up">▲</button>
-          <div class="dpad-middle">
-            <button class="ctrl-btn left" data-dir="left" aria-label="Left">◀</button>
-            <button class="ctrl-btn right" data-dir="right" aria-label="Right">▶</button>
-          </div>
-          <button class="ctrl-btn down" data-dir="down" aria-label="Down">▼</button>
-        </div>
-
-        <div class="action-buttons">
-          <button class="action-btn restart-btn" id="restartBtn">RESTART</button>
-          <button class="action-btn mode-btn" id="modeBtn">HARD</button>
-        </div>
-      </div>
-
       <footer>
-        <div class="footer-main">Swipe or use buttons to play</div>
+        <div class="footer-main">Swipe to play</div>
         <div class="footer-sub desktop-only">Arrow keys • SPACE to restart • H / E for mode</div>
       </footer>
+    </div>
+
+    <!-- Mode Selection Modal (mobile) -->
+    <div class="modal" id="modeModal">
+      <div class="modal-content">
+        <h2 class="modal-title">NEON<span>SNAKE</span></h2>
+        <p class="modal-text">Choose your mode</p>
+        <div class="modal-buttons">
+          <button class="modal-btn easy-btn" id="easyBtn">EASY</button>
+          <button class="modal-btn hard-btn" id="hardBtn">HARD</button>
+        </div>
+        <p class="modal-hint">Swipe to control the snake</p>
+      </div>
+    </div>
+
+    <!-- Game Over Modal (mobile) -->
+    <div class="modal hidden" id="gameOverModal">
+      <div class="modal-content">
+        <h2 class="modal-title game-over-title">GAME OVER</h2>
+        <p class="modal-score" id="finalScore">Score: 0</p>
+        <p class="modal-message" id="gameOverMsg">The snake hit the wall</p>
+        <div class="modal-buttons">
+          <button class="modal-btn restart-modal-btn" id="restartModalBtn">PLAY AGAIN</button>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>

@@ -190,10 +190,80 @@ window.addEventListener("load", function (event) {
   });
 
 
+
   // =====================================================
-  // MOBILE CONTROLS + SWIPE
+  // MOBILE DETECTION + MODALS + SWIPE
   // =====================================================
 
+  const isMobile = window.matchMedia("(max-width: 768px), (hover: none) and (pointer: coarse)").matches;
+
+  const modeModal = document.getElementById("modeModal");
+  const gameOverModal = document.getElementById("gameOverModal");
+  const finalScoreEl = document.getElementById("finalScore");
+  const gameOverMsgEl = document.getElementById("gameOverMsg");
+
+  function showModeModal() {
+    if (!isMobile) return;
+    modeModal.classList.remove("hidden");
+    gameOverModal.classList.add("hidden");
+    document.body.classList.remove("playing");
+  }
+
+  function hideModeModal() {
+    modeModal.classList.add("hidden");
+  }
+
+  function showGameOverModal(message) {
+    if (!isMobile) return;
+    finalScoreEl.textContent = hardMode ? `Score: H ${score}` : `Score: ${score}`;
+    gameOverMsgEl.textContent = message;
+    gameOverModal.classList.remove("hidden");
+    document.body.classList.remove("playing");
+  }
+
+  function hideGameOverModal() {
+    gameOverModal.classList.add("hidden");
+  }
+
+  // On mobile: show mode selection first
+  if (isMobile) {
+    showModeModal();
+  } else {
+    // Desktop: hide modals completely
+    if (modeModal) modeModal.classList.add("hidden");
+    if (gameOverModal) gameOverModal.classList.add("hidden");
+  }
+
+  // Mode buttons
+  document.getElementById("easyBtn")?.addEventListener("click", () => {
+    hardMode = false;
+    fadeSpeed = 5000;
+    fadeExponential = 1.024;
+    hideModeModal();
+    resetGame();
+    // Ready to swipe – game starts on first swipe
+    noteElement.innerHTML = `<div class="footer-main">Swipe to play</div>`;
+    noteElement.style.opacity = 1;
+  });
+
+  document.getElementById("hardBtn")?.addEventListener("click", () => {
+    hardMode = true;
+    fadeSpeed = 4000;
+    fadeExponential = 1.025;
+    hideModeModal();
+    resetGame();
+    noteElement.innerHTML = `<div class="footer-main">Swipe to play</div>`;
+    noteElement.style.opacity = 1;
+  });
+
+  // Play Again → back to mode selection
+  document.getElementById("restartModalBtn")?.addEventListener("click", () => {
+    hideGameOverModal();
+    showModeModal();
+    resetGame();
+  });
+
+  // Direction handler (shared)
   function handleDirection(dir) {
     if (dir === "left" && inputs[inputs.length - 1] != "left" && headDirection() != "right") {
       inputs.push("left");
@@ -210,114 +280,53 @@ window.addEventListener("load", function (event) {
     }
   }
 
-  // Virtual D-pad buttons
-  document.querySelectorAll(".ctrl-btn").forEach((btn) => {
-    const dir = btn.dataset.dir;
-
-    const press = (e) => {
-      e.preventDefault();
-      btn.classList.add("pressed");
-      handleDirection(dir);
-    };
-    const release = () => btn.classList.remove("pressed");
-
-    btn.addEventListener("touchstart", press, { passive: false });
-    btn.addEventListener("touchend", release);
-    btn.addEventListener("touchcancel", release);
-    btn.addEventListener("mousedown", press);
-    btn.addEventListener("mouseup", release);
-    btn.addEventListener("mouseleave", release);
-  });
-
-  // Restart button
-  const restartBtn = document.getElementById("restartBtn");
-  if (restartBtn) {
-    restartBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      resetGame();
-      startGame();
-    });
-  }
-
-  // Hard / Easy mode button
-  const modeBtn = document.getElementById("modeBtn");
-  if (modeBtn) {
-    modeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      hardMode = !hardMode;
-      if (hardMode) {
-        fadeSpeed = 4000;
-        fadeExponential = 1.025;
-        modeBtn.textContent = "EASY";
-        modeBtn.classList.add("active");
-        noteElement.innerHTML = `
-          <div class="footer-main">HARD MODE activated</div>
-          <div class="footer-sub">Tap RESTART or swipe to play</div>
-        `;
-      } else {
-        fadeSpeed = 5000;
-        fadeExponential = 1.024;
-        modeBtn.textContent = "HARD";
-        modeBtn.classList.remove("active");
-        noteElement.innerHTML = `
-          <div class="footer-main">EASY MODE activated</div>
-          <div class="footer-sub">Tap RESTART or swipe to play</div>
-        `;
-      }
-      noteElement.style.opacity = 1;
-      resetGame();
-    });
-  }
-
-  // Swipe gesture support
+  // Swipe gestures
   let touchStartX = 0;
   let touchStartY = 0;
   const minSwipeDistance = 30;
 
-  document.addEventListener(
-    "touchstart",
-    (e) => {
-      if (e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    },
-    { passive: true }
-  );
+  document.addEventListener("touchstart", (e) => {
+    // Ignore if a modal is open
+    if (isMobile && !modeModal.classList.contains("hidden")) return;
+    if (isMobile && !gameOverModal.classList.contains("hidden")) return;
 
-  document.addEventListener(
-    "touchend",
-    (e) => {
-      if (!touchStartX && !touchStartY) return;
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
 
-      const touch = e.changedTouches[0];
-      const dx = touch.clientX - touchStartX;
-      const dy = touch.clientY - touchStartY;
-      const absDx = Math.abs(dx);
-      const absDy = Math.abs(dy);
+  document.addEventListener("touchend", (e) => {
+    if (isMobile && !modeModal.classList.contains("hidden")) return;
+    if (isMobile && !gameOverModal.classList.contains("hidden")) return;
+    if (touchStartX === 0 && touchStartY === 0) return;
 
-      // Ignore small movements
-      if (Math.max(absDx, absDy) < minSwipeDistance) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
 
-      // Prefer the dominant axis
-      if (absDx > absDy) {
-        handleDirection(dx > 0 ? "right" : "left");
-      } else {
-        handleDirection(dy > 0 ? "down" : "up");
-      }
-
+    if (Math.max(absDx, absDy) < minSwipeDistance) {
       touchStartX = 0;
       touchStartY = 0;
-    },
-    { passive: true }
-  );
+      return;
+    }
 
-  // Prevent page scroll while interacting with the game area
-  document.querySelector(".grid-wrapper")?.addEventListener(
-    "touchmove",
-    (e) => e.preventDefault(),
-    { passive: false }
-  );
+    if (absDx > absDy) {
+      handleDirection(dx > 0 ? "right" : "left");
+    } else {
+      handleDirection(dy > 0 ? "down" : "up");
+    }
+
+    touchStartX = 0;
+    touchStartY = 0;
+  }, { passive: true });
+
+  // Prevent scroll while playing
+  document.querySelector(".grid-wrapper")?.addEventListener("touchmove", (e) => {
+    if (gameStarted) e.preventDefault();
+  }, { passive: false });
 
 
   function startGame() {
@@ -325,6 +334,11 @@ window.addEventListener("load", function (event) {
     document.body.classList.add("playing");
     noteElement.style.opacity = 0;
     noteElement.innerHTML = "";
+    // Hide any lingering modal text
+    if (isMobile) {
+      hideModeModal();
+      hideGameOverModal();
+    }
     window.requestAnimationFrame(main);
   }
 
@@ -369,20 +383,26 @@ window.addEventListener("load", function (event) {
 
       window.requestAnimationFrame(main);
     } catch (error) {
-      // Game over message
+      // Game over
       document.body.classList.remove("playing");
-      const changeMode = hardMode
-        ? `Tap HARD/EASY to switch mode`
-        : `Tap HARD for a bigger challenge`;
-      noteElement.innerHTML = `
-        <div class="footer-main" style="color:#ff2a6d;text-shadow:0 0 12px #ff2a6d88;">
-          ${error.message}
-        </div>
-        <div class="footer-sub">
-          Tap RESTART or swipe to play again • ${changeMode}
-        </div>
-      `;
-      noteElement.style.opacity = 1;
+      gameStarted = false;
+
+      if (isMobile) {
+        showGameOverModal(error.message);
+      } else {
+        const changeMode = hardMode
+          ? `Press <kbd>E</kbd> for Easy mode`
+          : `Press <kbd>H</kbd> for Hard mode`;
+        noteElement.innerHTML = `
+          <div class="footer-main" style="color:#ff2a6d;text-shadow:0 0 12px #ff2a6d88;">
+            ${error.message}
+          </div>
+          <div class="footer-sub">
+            Press <kbd>SPACE</kbd> to restart • ${changeMode}
+          </div>
+        `;
+        noteElement.style.opacity = 1;
+      }
       containerElement.style.opacity = 1;
     }
 

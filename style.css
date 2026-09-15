@@ -328,158 +328,151 @@ kbd {
   box-shadow: 0 0 8px rgba(0, 255, 157, 0.2);
 }
 
-/* Game over styling is handled by JS updating footer */
 
-/* Responsive */
+/* =========================================
+   MODALS (Mobile)
+   ========================================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 16, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 20px;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: rgba(10, 10, 30, 0.95);
+  border: 1px solid rgba(0, 255, 157, 0.3);
+  border-radius: 20px;
+  padding: 32px 28px;
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+  box-shadow:
+    0 0 40px rgba(0, 255, 157, 0.15),
+    0 0 80px rgba(255, 42, 109, 0.08);
+}
+
+.modal-title {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: 0.12em;
+  color: #fff;
+  text-shadow: 0 0 15px var(--snake-glow);
+  margin-bottom: 8px;
+}
+
+.modal-title span {
+  color: var(--snake);
+}
+
+.game-over-title {
+  color: var(--danger);
+  text-shadow: 0 0 20px var(--apple-glow);
+}
+
+.modal-text {
+  font-size: 1.1rem;
+  color: rgba(224, 224, 255, 0.8);
+  margin-bottom: 24px;
+}
+
+.modal-score {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--snake);
+  text-shadow: 0 0 12px var(--snake-glow);
+  margin: 12px 0;
+}
+
+.modal-message {
+  font-size: 0.95rem;
+  color: rgba(224, 224, 255, 0.7);
+  margin-bottom: 24px;
+}
+
+.modal-hint {
+  font-size: 0.85rem;
+  color: rgba(224, 224, 255, 0.5);
+  margin-top: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-btn {
+  flex: 1;
+  max-width: 140px;
+  padding: 14px 12px;
+  border: 2px solid rgba(0, 255, 157, 0.4);
+  border-radius: 14px;
+  background: rgba(0, 255, 157, 0.08);
+  color: var(--snake);
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.modal-btn:active {
+  transform: scale(0.96);
+  background: rgba(0, 255, 157, 0.25);
+  box-shadow: 0 0 25px rgba(0, 255, 157, 0.35);
+}
+
+.hard-btn {
+  border-color: rgba(255, 42, 109, 0.5);
+  background: rgba(255, 42, 109, 0.08);
+  color: var(--danger);
+}
+
+.hard-btn:active {
+  background: rgba(255, 42, 109, 0.25);
+  box-shadow: 0 0 25px rgba(255, 42, 109, 0.35);
+}
+
+.restart-modal-btn {
+  max-width: 200px;
+}
+
+/* Hide modals on desktop (keyboard flow) */
+@media (min-width: 769px) and (hover: hover) {
+  .modal {
+    display: none !important;
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
 @media (min-height: 700px) {
   :root {
     --size: 26px;
   }
 }
 
-@media (max-width: 480px) {
-  :root {
-    --size: 16px;
-  }
-
-  .title {
-    font-size: 1.6rem;
-  }
-
-  header {
-    width: calc(var(--size) * 17);
-  }
-
-  .stat {
-    padding: 8px 10px;
-  }
-
-  .contrast,
-  .score {
-    font-size: 1.3rem;
-  }
-}
-
-@media (max-height: 500px) {
-  :root {
-    --size: 14px;
-  }
-
-  .title {
-    font-size: 1.3rem;
-    margin-bottom: 0;
-  }
-
-  .container {
-    gap: 10px;
-  }
-}
-
-/* =========================================
-   MOBILE CONTROLS
-   ========================================= */
-
-.mobile-controls {
-  display: none; /* hidden on desktop by default */
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-top: 8px;
-  width: 100%;
-  max-width: 280px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.dpad {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-.dpad-middle {
-  display: flex;
-  gap: 60px;
-}
-
-.ctrl-btn {
-  width: 64px;
-  height: 64px;
-  border: 2px solid rgba(0, 255, 157, 0.4);
-  border-radius: 16px;
-  background: rgba(10, 10, 30, 0.85);
-  color: var(--snake);
-  font-size: 1.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  box-shadow:
-    0 0 15px rgba(0, 255, 157, 0.15),
-    inset 0 0 12px rgba(0, 255, 157, 0.05);
-  transition: all 0.12s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.ctrl-btn:active,
-.ctrl-btn.pressed {
-  background: rgba(0, 255, 157, 0.25);
-  border-color: var(--snake);
-  box-shadow:
-    0 0 25px rgba(0, 255, 157, 0.4),
-    inset 0 0 15px rgba(0, 255, 157, 0.15);
-  transform: scale(0.94);
-}
-
-.action-buttons {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  justify-content: center;
-}
-
-.action-btn {
-  flex: 1;
-  max-width: 120px;
-  padding: 12px 8px;
-  border: 2px solid rgba(0, 212, 255, 0.35);
-  border-radius: 12px;
-  background: rgba(10, 10, 30, 0.85);
-  color: var(--accent);
-  font-family: "Orbitron", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.12);
-  transition: all 0.12s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.action-btn:active {
-  background: rgba(0, 212, 255, 0.2);
-  border-color: var(--accent);
-  transform: scale(0.96);
-}
-
-.mode-btn.active {
-  border-color: var(--danger);
-  color: var(--danger);
-  box-shadow: 0 0 15px rgba(255, 42, 109, 0.3);
-}
-
-/* Show mobile controls only on touch devices / small screens */
 @media (max-width: 768px), (hover: none) and (pointer: coarse) {
-  .mobile-controls {
-    display: flex;
-  }
-
   .desktop-only {
-    display: none;
+    display: none !important;
   }
 
   .footer-main {
@@ -502,20 +495,9 @@ kbd {
   }
 }
 
-/* Better sizing on phones */
 @media (max-width: 420px) {
   :root {
     --size: 15px;
-  }
-
-  .ctrl-btn {
-    width: 58px;
-    height: 58px;
-    font-size: 1.25rem;
-  }
-
-  .dpad-middle {
-    gap: 50px;
   }
 }
 
@@ -523,14 +505,20 @@ kbd {
   :root {
     --size: 13px;
   }
+}
 
-  .ctrl-btn {
-    width: 52px;
-    height: 52px;
+@media (max-height: 500px) {
+  :root {
+    --size: 14px;
   }
 
-  .dpad-middle {
-    gap: 44px;
+  .title {
+    font-size: 1.3rem;
+    margin-bottom: 0;
+  }
+
+  .container {
+    gap: 10px;
   }
 }
 
