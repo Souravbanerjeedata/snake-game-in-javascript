@@ -2,8 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="A visually stunning Snake game with smooth animations, contrast fading, and hard mode." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <title>Neon Snake</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,9 +35,26 @@
         <div class="grid"></div>
       </div>
 
+      <!-- Mobile Controls -->
+      <div class="mobile-controls">
+        <div class="dpad">
+          <button class="ctrl-btn up" data-dir="up" aria-label="Up">▲</button>
+          <div class="dpad-middle">
+            <button class="ctrl-btn left" data-dir="left" aria-label="Left">◀</button>
+            <button class="ctrl-btn right" data-dir="right" aria-label="Right">▶</button>
+          </div>
+          <button class="ctrl-btn down" data-dir="down" aria-label="Down">▼</button>
+        </div>
+
+        <div class="action-buttons">
+          <button class="action-btn restart-btn" id="restartBtn">RESTART</button>
+          <button class="action-btn mode-btn" id="modeBtn">HARD</button>
+        </div>
+      </div>
+
       <footer>
-        <div class="footer-main">Press an arrow key or SPACE to start</div>
-        <div class="footer-sub">Ready for hard mode? Press <kbd>H</kbd></div>
+        <div class="footer-main">Swipe or use buttons to play</div>
+        <div class="footer-sub desktop-only">Arrow keys • SPACE to restart • H / E for mode</div>
       </footer>
     </div>
 

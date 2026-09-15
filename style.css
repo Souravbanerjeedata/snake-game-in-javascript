@@ -374,3 +374,168 @@ kbd {
     gap: 10px;
   }
 }
+
+/* =========================================
+   MOBILE CONTROLS
+   ========================================= */
+
+.mobile-controls {
+  display: none; /* hidden on desktop by default */
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  width: 100%;
+  max-width: 280px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dpad-middle {
+  display: flex;
+  gap: 60px;
+}
+
+.ctrl-btn {
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgba(0, 255, 157, 0.4);
+  border-radius: 16px;
+  background: rgba(10, 10, 30, 0.85);
+  color: var(--snake);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 0 15px rgba(0, 255, 157, 0.15),
+    inset 0 0 12px rgba(0, 255, 157, 0.05);
+  transition: all 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ctrl-btn:active,
+.ctrl-btn.pressed {
+  background: rgba(0, 255, 157, 0.25);
+  border-color: var(--snake);
+  box-shadow:
+    0 0 25px rgba(0, 255, 157, 0.4),
+    inset 0 0 15px rgba(0, 255, 157, 0.15);
+  transform: scale(0.94);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.action-btn {
+  flex: 1;
+  max-width: 120px;
+  padding: 12px 8px;
+  border: 2px solid rgba(0, 212, 255, 0.35);
+  border-radius: 12px;
+  background: rgba(10, 10, 30, 0.85);
+  color: var(--accent);
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.12);
+  transition: all 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.action-btn:active {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: var(--accent);
+  transform: scale(0.96);
+}
+
+.mode-btn.active {
+  border-color: var(--danger);
+  color: var(--danger);
+  box-shadow: 0 0 15px rgba(255, 42, 109, 0.3);
+}
+
+/* Show mobile controls only on touch devices / small screens */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .mobile-controls {
+    display: flex;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .footer-main {
+    font-size: 0.95rem;
+  }
+
+  .container {
+    gap: 12px;
+    padding: 12px;
+    padding-bottom: 24px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    letter-spacing: 0.12em;
+  }
+
+  header {
+    width: min(calc(var(--size) * 17), 92vw);
+  }
+}
+
+/* Better sizing on phones */
+@media (max-width: 420px) {
+  :root {
+    --size: 15px;
+  }
+
+  .ctrl-btn {
+    width: 58px;
+    height: 58px;
+    font-size: 1.25rem;
+  }
+
+  .dpad-middle {
+    gap: 50px;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --size: 13px;
+  }
+
+  .ctrl-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .dpad-middle {
+    gap: 44px;
+  }
+}
+
+/* Prevent pull-to-refresh and overscroll while playing */
+body.playing {
+  overscroll-behavior: none;
+  touch-action: none;
+}
